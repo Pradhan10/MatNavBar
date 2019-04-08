@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable} from 'rxjs';
 
 
 @Injectable()
@@ -9,7 +9,7 @@ export class UserService {
 
   readonly usersUrl = 'https://jsonplaceholder.typicode.com/users';
   private _users: BehaviorSubject<User[]>;
-  
+
   private dataStore: {
     users: User[]
   };

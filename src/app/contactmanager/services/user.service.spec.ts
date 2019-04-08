@@ -68,7 +68,7 @@ describe('UserService (with spies)', () => {
     expect(req.request.method).toEqual('GET');
 
     // Respond with the mock heroes
-    const check = mockUserService.loadAll();
+    const check = mockUserService.loadAll().sub;
   });
 
 

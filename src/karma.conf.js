@@ -15,8 +15,10 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    angularCli: {
+      environment: 'dev'
+    },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../coverage/mat-nav-bar'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },

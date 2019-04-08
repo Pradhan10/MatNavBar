@@ -1,11 +1,11 @@
-import {TestBed} from "@angular/core/testing";
-import {SidenavComponent} from "./sidenav.component";
-import {NgZone, NO_ERRORS_SCHEMA} from "@angular/core";
-import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
-import {RouterTestingModule} from "@angular/router/testing";
-import {HttpClient} from "@angular/common/http";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {TestBed} from '@angular/core/testing';
+import {SidenavComponent} from './sidenav.component';
+import {NgZone, NO_ERRORS_SCHEMA} from '@angular/core';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 
 describe('SideNav Component', () => {

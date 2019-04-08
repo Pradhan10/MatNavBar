@@ -32,6 +32,7 @@ export class SidenavComponent implements OnInit {
 
   @ViewChild(MatSidenav) sidenav: MatSidenav;
 
+/*
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
   }
@@ -40,6 +41,7 @@ export class SidenavComponent implements OnInit {
     this.dir = this.dir == 'ltr' ? 'rtl' : 'ltr';
     this.sidenav.toggle().then(() => this.sidenav.toggle());
   }
+*/
 
   ngOnInit() {
     this.users = this.userService.users;

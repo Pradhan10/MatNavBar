@@ -15,114 +15,79 @@ import {ContactmanagerAppComponent} from '../../contactmanager-app.component';
 import {MainContentComponent} from '../main-content/main-content.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {MatDialog, MatSelect, MatSnackBar} from '@angular/material';
+import {of} from "rxjs/internal/observable/of";
 
 
 /*Tests for other than dialog reference*/
 describe('ToolbarComponent [with mocks]', () => {
-    let routerClient: Router;
-    let toolbarComponent: ToolbarComponent;
-    let comp: ToolbarComponent;
-    let fixture: ComponentFixture<ToolbarComponent>;
+  let routerClient: Router;
+  let toolbarComponent: ToolbarComponent;
+  let comp: ToolbarComponent;
+  let fixture: ComponentFixture<ToolbarComponent>;
 
-    let router: Router;
+  let router: Router;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            // Import the httpClient mocking service
-            // Import Dialog Test Module
-            imports: [RouterTestingModule,
-                MaterialModule,
-                NoopAnimationsModule,
-                DialogTestModule,
-                RouterTestingModule.withRoutes([])
-            ],
-            // Provide the service-under-test
-            providers: [ToolbarComponent]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ToolbarComponent);
-            comp = fixture.componentInstance;
-        });
-        // Inject
-        routerClient = TestBed.get(Router);
-        toolbarComponent = TestBed.get(ToolbarComponent);
-        router = TestBed.get(Router);
-
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      // Import the httpClient mocking service
+      // Import Dialog Test Module
+      imports: [RouterTestingModule,
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes([])
+      ],
+      // Provide the service-under-test
+      providers: [ToolbarComponent]
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(ToolbarComponent);
+      comp = fixture.componentInstance;
     });
+    // Inject
+    routerClient = TestBed.get(Router);
+    toolbarComponent = TestBed.get(ToolbarComponent);
+    router = TestBed.get(Router);
 
-    it('should create ToolBar Component', () => {
-        expect(toolbarComponent).toBeDefined();
+  });
+
+  it('should create ToolBar Component', () => {
+    expect(toolbarComponent).toBeDefined();
+  });
+
+  /* TEST IT FROM HERE : http://angular-tips.com/blog/2018/02/testing-angular-material-dialog-templates/*/
+
+  it('should call openSnackBar', () => {
+    expect(toolbarComponent.openSnackBar('mock', 'mockAction')).toBeDefined();
+  });
+
+  fit('should call openAddContactDialog', () => {
+    // Arrange
+    // const overlayContainerElement: HTMLElement;
+/*
+    const snack = jasmine.createSpyObj('MatSnackBar', ['open']);
+    const testToolBarComponent = new ToolbarComponent(dialog, snack, router);
+    const afterCloseCallback = jasmine.createSpy('afterClose callback');
+
+
+    // assert
+    expect(testToolBarComponent.openAddContactDialog()).toBeUndefined();
+*/
+    let dialog: MatDialog;
+    dialog = TestBed.get(MatDialog);
+    const dialogRef = dialog.open(NewContactDialogComponent, {
+      width: '450px'
     });
+    let temp: any;
+    const ans = dialogRef.afterClosed().subscribe(result => temp);
+    spyOn(dialogRef, 'afterClosed').and.returnValues(of({
+      result: true
+    }));
+    expect(dialogRef.afterClosed()).toHaveBeenCalled();
+    expect(temp).toBeDefined();
+  });
 
-    /* TEST IT FROM HERE : http://angular-tips.com/blog/2018/02/testing-angular-material-dialog-templates/*/
-
-    it('should call openSnackBar', () => {
-        expect(toolbarComponent.openSnackBar('mock', 'mockAction')).toBeDefined();
-    });
-
-    it('should call openAddContactDialog', () => {
-        // Arrange
-        // const overlayContainerElement: HTMLElement;
-        let dialog: MatDialog;
-        dialog = TestBed.get(MatDialog);
-        const snack = jasmine.createSpyObj('MatSnackBar', ['open']);
-        const testToolBarComponent = new ToolbarComponent(dialog, snack, router);
-        const afterCloseCallback = jasmine.createSpy('afterClose callback');
-
-        const dialogRef = dialog.open(NewContactDialogComponent, {
-            width: '450px'
-        });
-        // assert
-        expect(testToolBarComponent.openAddContactDialog()).toBeUndefined();
-        let temp: any;
-        const ans = dialogRef.afterClosed().subscribe(result => temp);
-
-        expect(dialogRef.afterClosed()).toHaveBeenCalled();
-    });
-
-    it('should call ngOnInit()', () => {
-        expect(toolbarComponent.ngOnInit()).toHaveBeenCalled();
-    });
+  it('should call ngOnInit()', () => {
+    expect(toolbarComponent.ngOnInit()).toHaveBeenCalled();
+  });
 });
 
-// Noop component is only a workaround to trigger change detection
-@Component({
-    template: ''
-})
-class NoopComponent {
-}
-
-const TEST_DIRECTIVES = [
-    NewContactDialogComponent,
-    NoopComponent,
-    MatSelect
-];
-
-@NgModule({
-    imports: [
-        CommonModule,
-        HttpClientModule,
-        MaterialModule,
-        FlexLayoutModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        NoopAnimationsModule
-    ],
-    providers: [
-        UserService
-    ],
-    declarations: [
-        ContactmanagerAppComponent,
-        ToolbarComponent,
-        MainContentComponent,
-        SidenavComponent,
-        NewContactDialogComponent
-    ],
-    entryComponents: [
-        NewContactDialogComponent
-    ]
-
-})
-class DialogTestModule {
-}
 

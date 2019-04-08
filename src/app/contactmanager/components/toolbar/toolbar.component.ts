@@ -2,25 +2,21 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 import { NewContactDialogComponent } from '../new-contact-dialog/new-contact-dialog.component';
 import { Router } from '@angular/router';
+import {MainContentComponent} from "../main-content/main-content.component";
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
+  entryComponents: [NewContactDialogComponent]
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent  {
 
-  @Output() toggleSidenav = new EventEmitter<void>();
-  @Output() toggleTheme = new EventEmitter<void>();
-  @Output() toggleDir = new EventEmitter<void>();
-  
   constructor(
     private dialog: MatDialog, 
     private snackBar: MatSnackBar,
     private router: Router) { }
 
-  ngOnInit() {
-  }
 
   /*Refactored openAddContatDialog due to testing complexiety*/
   openAddContactDialog(): void {

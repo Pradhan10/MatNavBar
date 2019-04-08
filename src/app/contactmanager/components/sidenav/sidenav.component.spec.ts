@@ -61,4 +61,8 @@ describe('SideNav Component', () => {
   it('should not initialize vars before ngOnInit',() => {
     expect(sidenavComponent.users).toBeUndefined();
   });
+
+  it('should have ngOnInit() method',() => {
+    expect(sidenavComponent.ngOnInit()).toBeDefined();
+  });
 });

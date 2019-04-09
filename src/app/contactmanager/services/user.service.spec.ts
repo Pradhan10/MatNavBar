@@ -68,7 +68,7 @@ describe('UserService (with spies)', () => {
     expect(req.request.method).toEqual('GET');
 
     // Respond with the mock heroes
-    const check = mockUserService.loadAll().sub;
+    const check = mockUserService.loadAll();
   });
 
 
@@ -105,9 +105,9 @@ describe('UserService (with mocks)', () => {
     let expectedUsers = getTestUsers();
     let temp = userMockService.loadAll();
     // Act
-/*    userMockService.loadAll()(next => temp,
-      fail
-    );*/
+    /*    userMockService.loadAll()(next => temp,
+          fail
+        );*/
     expect(temp).toContain(expectedUsers);
   });
 });
@@ -239,5 +239,3 @@ describe('UserService (method three)', () => {
 
 
 });
-
-

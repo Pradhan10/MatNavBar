@@ -1,9 +1,5 @@
 <mat-toolbar color="primary">
 
-  <button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
-    <mat-icon>menu</mat-icon>
-  </button>
-
   <span>Contact Manager</span>
 
   <span class="example-spacer"></span>
@@ -12,7 +8,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="openAddContactDialog()">New Contact</button>
+    <button mat-menu-item (click)="toolBarHelper.openAddContactDialog()">New Contact</button>
 <!--    <button mat-menu-item (click)="toggleTheme.emit()">Toggle theme</button>-->
 <!--    <button mat-menu-item (click)="toggleDir.emit()">Toggle dir</button>-->
   </mat-menu>

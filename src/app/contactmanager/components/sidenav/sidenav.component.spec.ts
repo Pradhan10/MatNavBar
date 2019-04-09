@@ -44,21 +44,13 @@ describe('SideNav Component', () => {
 
   it('should have sidenavComponent defined', () => {
     expect(sidenavComponent).toBeDefined();
-  })
-
-  it('should have toggleTheme defined',  () => {
-    expect(sidenavComponent.toggleTheme()).toBeUndefined();
-  });
-
-  it('should have toggleDir defined',  () => {
-    expect(sidenavComponent.toggleDir()).toBeUndefined();
   });
 
   it('should have isScreenSmall defined',  () => {
     expect(sidenavComponent.isScreenSmall()).toBeDefined();
   });
 
-  it('should not initialize vars before ngOnInit',() => {
+  it('should not initialize vars before ngOnInit', () => {
     expect(sidenavComponent.users).toBeUndefined();
   });
 

@@ -1,8 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { AppModule } from 'mat-nav-bar/src/app/app.module';
+
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from 'mat-nav-bar/src/app/contactmanager/services/user.service';
-import { MainContentComponent } from 'mat-nav-bar/src/app/contactmanager/components/main-content/main-content.component';
+import {MainContentComponent} from "./main-content.component";
+import {UserService} from "../../services/user.service";
+import {AppModule} from "../../../app.module";
 
 let comp: MainContentComponent;
 let fixture: ComponentFixture<MainContentComponent>;

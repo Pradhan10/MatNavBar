@@ -1,25 +1,17 @@
-import {Router, RouterModule} from '@angular/router';
+import {Router} from '@angular/router';
 import {ToolbarComponent} from './toolbar.component';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from '../../../shared/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, NgModule} from '@angular/core';
-import {NewContactDialogComponent} from '../new-contact-dialog/new-contact-dialog.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {UserService} from '../../services/user.service';
-import {ContactmanagerAppComponent} from '../../contactmanager-app.component';
-import {MainContentComponent} from '../main-content/main-content.component';
-import {SidenavComponent} from '../sidenav/sidenav.component';
-import {MatDialog, MatSelect, MatSnackBar} from '@angular/material';
-import {of} from "rxjs/internal/observable/of";
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
+import {ActivatedRouteStub} from '../../../testing/activated-route-stub';
+import {asyncData} from '../../../testing/async-observable-helpers';
+import {NewContactDialogComponent} from "../new-contact-dialog/new-contact-dialog.component";
 
 
 /*Tests for other than dialog reference*/
-describe('ToolbarComponent [with mocks]', () => {
+fdescribe('ToolbarComponent [with mocks]', () => {
   let routerClient: Router;
   let toolbarComponent: ToolbarComponent;
   let comp: ToolbarComponent;
@@ -59,35 +51,56 @@ describe('ToolbarComponent [with mocks]', () => {
     expect(toolbarComponent.openSnackBar('mock', 'mockAction')).toBeDefined();
   });
 
-  fit('should call openAddContactDialog', () => {
-    // Arrange
-    // const overlayContainerElement: HTMLElement;
-/*
-    const snack = jasmine.createSpyObj('MatSnackBar', ['open']);
-    const testToolBarComponent = new ToolbarComponent(dialog, snack, router);
-    const afterCloseCallback = jasmine.createSpy('afterClose callback');
+  it('should call openAddContactDialog()', () => {
+    const mockDialog = TestBed.get(MatDialog);
+    const mockSnack = TestBed.get(MatSnackBar);
+    const mockRouter = TestBed.get(Router);
+    const myComp: ToolbarComponent = new ToolbarComponent(mockDialog, mockSnack, mockRouter);
+    const res = myComp.openAddContactDialog();
+    class ToolbarComponentSpy {
+      dialog = mockDialog;
+      dialogRef: MatDialogRef<NewContactDialogComponent> = this.dialog.open(NewContactDialogComponent, {
+        width: '450px'
+      });
+      /* emit cloned test hero */
+      openAddContactDialog = jasmine.createSpy('openAddContactDialog').and.callFake(
+        () => asyncData(Object.assign({}, this.dialogRef))
+      );
 
+/*      /!* emit clone of test hero, with changes merged in *!/
+      saveHero = jasmine.createSpy('saveHero').and.callFake(
+        (hero: Hero) => asyncData(Object.assign(this.testHero, hero))
+      );*/
+    }
+    beforeEach(async(() => {
+      const routerSpy = createRouterSpy();
 
-    // assert
-    expect(testToolBarComponent.openAddContactDialog()).toBeUndefined();
-*/
-    let dialog: MatDialog;
-    dialog = TestBed.get(MatDialog);
-    const dialogRef = dialog.open(NewContactDialogComponent, {
-      width: '450px'
-    });
-    let temp: any;
-    const ans = dialogRef.afterClosed().subscribe(result => temp);
-    spyOn(dialogRef, 'afterClosed').and.returnValues(of({
-      result: true
+      TestBed.configureTestingModule({
+        imports:   [ HeroModule ],
+        providers: [
+          { provide: ActivatedRoute, useValue: activatedRoute },
+          { provide: Router,         useValue: routerSpy},
+          // HeroDetailService at this level is IRRELEVANT!
+          { provide: HeroDetailService, useValue: {} }
+        ]
+      })
+
+      // Override component's own provider
+        .overrideComponent(HeroDetailComponent, {
+          set: {
+            providers: [
+              { provide: HeroDetailService, useClass: HeroDetailServiceSpy }
+            ]
+          }
+        })
+
+        .compileComponents();
     }));
-    expect(dialogRef.afterClosed()).toHaveBeenCalled();
-    expect(temp).toBeDefined();
+    const compSpy = fixture.debugElement.injector.get(NewContactDialogComponent) as any;
+    expect(res).toBeDefined();
+    fixture.detectChanges();
+/*    expect(res).toContain(dialogRef);*/
   });
 
-  it('should call ngOnInit()', () => {
-    expect(toolbarComponent.ngOnInit()).toHaveBeenCalled();
-  });
+
 });
-
-

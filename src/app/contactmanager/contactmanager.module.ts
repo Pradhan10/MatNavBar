@@ -39,14 +39,15 @@ const routes: Routes = [
     UserService
   ],
   declarations: [
-    ContactmanagerAppComponent, 
-    ToolbarComponent, 
-    MainContentComponent, 
+    ContactmanagerAppComponent,
+    ToolbarComponent,
+    MainContentComponent,
     SidenavComponent,
     NewContactDialogComponent
-  ], 
+  ],
   entryComponents: [
     NewContactDialogComponent
-  ]
+  ],
+  exports: [NewContactDialogComponent]
 })
 export class ContactmanagerModule { }

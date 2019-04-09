@@ -1,8 +1,12 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
-import { NewContactDialogComponent } from '../new-contact-dialog/new-contact-dialog.component';
-import { Router } from '@angular/router';
-import {MainContentComponent} from "../main-content/main-content.component";
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material';
+import {NewContactDialogComponent} from '../new-contact-dialog/new-contact-dialog.component';
+import {Router} from '@angular/router';
+import {MainContentComponent} from '../main-content/main-content.component';
+import {Address} from '../../models/address';
+import {Company} from '../../models/user';
+import {ToolBarHelper} from './toolbar-helper';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -10,35 +14,18 @@ import {MainContentComponent} from "../main-content/main-content.component";
   styleUrls: ['./toolbar.component.scss'],
   entryComponents: [NewContactDialogComponent]
 })
-export class ToolbarComponent  {
+export class ToolbarComponent implements OnInit {
 
+  toolBarHelper: ToolBarHelper;
   constructor(
-    private dialog: MatDialog, 
-    private snackBar: MatSnackBar,
-    private router: Router) { }
-
-
-  /*Refactored openAddContatDialog due to testing complexiety*/
-  openAddContactDialog(): void {
-    let dialogRef = this.dialog.open(NewContactDialogComponent, {
-      width: '450px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-
-      if (result) {
-        this.openSnackBar("Contact added", "Navigate")
-          .onAction().subscribe(() => {
-            this.router.navigate(['/contactmanager', result.id]);
-          });
-      }
-    });
+    private dialog: MatDialog,
+    private router: Router) {
   }
 
-  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar> {
-    return this.snackBar.open(message, action, {
-      duration: 5000,
-    });
+  ngOnInit(): void {
+    this.toolBarHelper = new ToolBarHelper(this.dialog, this.router);
   }
+
+
+
 }

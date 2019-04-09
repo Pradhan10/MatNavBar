@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 
 @Injectable()
@@ -36,7 +36,7 @@ export class UserService {
     return this.dataStore.users.find(x => x.id == id);
   }
 
-  loadAll() {
+  loadAll(): Subscription {
     return this.http.get<User[]>(this.usersUrl)
       .subscribe(data => {
         this.dataStore.users = data;

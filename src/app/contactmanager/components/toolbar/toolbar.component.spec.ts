@@ -7,7 +7,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 /*Tests for other than dialog reference*/
-fdescribe('ToolbarComponent [with mocks]', () => {
+describe('ToolbarComponent [with mocks]', () => {
   let routerClient: Router;
   let toolbarComponent: ToolbarComponent;
   let comp: ToolbarComponent;
@@ -41,6 +41,10 @@ fdescribe('ToolbarComponent [with mocks]', () => {
     expect(toolbarComponent).toBeDefined();
   });
 
+  it('should have ngOnInit() method', () => {
+    expect(toolbarComponent.ngOnInit()).toBeDefined();
+  });
   /* TEST IT FROM HERE : http://angular-tips.com/blog/2018/02/testing-angular-material-dialog-templates/*/
+
 
 });

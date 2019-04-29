@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { User } from '../../models/user';
 import { FormControl, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ export class NewContactDialogComponent implements OnInit {
 
   user: User;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewContactDialogComponent>,
     private userService: UserService) { }
 

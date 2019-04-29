@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 
 export class ToolBarHelper {
   constructor(private dialog: MatDialog,
-/*              private snackBar: MatSnackBar,*/
               private router: Router) {
   }
 
@@ -19,23 +18,9 @@ export class ToolBarHelper {
 
       if (result) {
         this.router.navigate(['/contactmanager', result.id]);
-        /*
-        this.openSnackBar("Contact added", "Navigate")
-          .onAction().subscribe(() => {
-
-        });
-        */
       }
     });
   }
-
-/*
-  openSnackBar(message: string, action: string): MatSnackBarRef<SimpleSnackBar> {
-    return this.snackBar.open(message, action, {
-      duration: 5000,
-    });
-  }
-*/
 
 
 }

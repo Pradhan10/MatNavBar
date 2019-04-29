@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 export class UserService {
 
   readonly usersUrl = 'https://jsonplaceholder.typicode.com/users';
-  private _users: BehaviorSubject<User[]>;
+  public _users: BehaviorSubject<User[]>;
 
   private dataStore: {
     users: User[]

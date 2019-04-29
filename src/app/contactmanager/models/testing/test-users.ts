@@ -1,5 +1,5 @@
 import {User} from '../User';
-import {Address} from "../address";
+import {Address} from '../address';
 
 
 /** return fresh array of test Users */

@@ -4,6 +4,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from '../../../shared/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialog} from '@angular/material';
 
 
 /*Tests for other than dialog reference*/
@@ -46,5 +47,8 @@ describe('ToolbarComponent [with mocks]', () => {
   });
   /* TEST IT FROM HERE : http://angular-tips.com/blog/2018/02/testing-angular-material-dialog-templates/*/
 
-
+  it('should call openAddContactDialog()', () => {
+/*    const mockDialog = new MatDialog();*/
+    const mockRouter = new RouterTestingModule();
+  });
 });

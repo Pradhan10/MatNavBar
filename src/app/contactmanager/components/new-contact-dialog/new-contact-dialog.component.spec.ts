@@ -49,7 +49,7 @@ function tests() {
   it('should call ngOnInit()', () => {
     const secFixture = TestBed.createComponent(NewContactDialogComponent);
     const secComp = secFixture.componentInstance;
-    expect(secComp.ngOnInit()).toBeDefined();
+    expect(secComp.ngOnInit()).toBeUndefined();
   });
 
   it('should call getErrorMessage()', () => {

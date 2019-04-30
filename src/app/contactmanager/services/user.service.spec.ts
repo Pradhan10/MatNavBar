@@ -1,11 +1,11 @@
 import {getTestBed, TestBed} from '@angular/core/testing';
 import {UserService} from './user.service';
 import {getOneTestUser, getTestUsers} from '../models/testing/test-users';
-import {Company, User} from '../models/user';
+import {User} from '../models/user';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {HttpClient} from '@angular/common/http';
-import {Subscription} from "rxjs";
-import {Address} from "../models/address";
+import {of} from 'rxjs';
+import { Response, ResponseOptions, ResponseType, Request } from '@angular/http';
 
 
 describe('UserService (with spies)', () => {
@@ -15,7 +15,7 @@ describe('UserService (with spies)', () => {
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('httpClient', ['get']);
-    userService = new UserService(<any>httpClientSpy);
+    userService = new UserService(httpClientSpy as any);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -51,254 +51,13 @@ describe('UserService (with spies)', () => {
     expect(userService.userById(1)).toBeUndefined();
   });
 
-  it('should have loadAll() method which returns expected heroes', () => {
-    // Arrange
-    const expectedUsers: User[] = getTestUsers();
-    httpClientSpy.get.and.returnValue((expectedUsers));
-    let httpTestingController: HttpTestingController;
-    // Act
-    /*Nothing to do here*/
-    // Assert
-    expect(userService.userById(1)).toBeUndefined();
-  });
 
   it('should have loadAll() method which returns expected users', () => {
     // Arrange
     const expectedUsers: User[] = getTestUsers();
     const mockUserService = TestBed.get(UserService);
-    // HeroService should have made one request to GET heroes from expected URL
-    /*
-        const req = httpTestingController.expectOne(userService.usersUrl);
-        expect(req.request.method).toEqual('GET');
-    */
 
-    const mockResponse: User[] = [
-      {
-        id: 1,
-        name: 'Leanne Graham',
-        avatar: 'some',
-        bio: 'Jhoot',
-        username: 'Bret',
-        email: 'Sincere@april.biz',
-        phone: '1-770-736-8031 x56442',
-        address: {
-          street: 'Kulas Light',
-          suite: 'Apt. 556',
-          city: 'Gwenborough',
-          zipcode: '92998-3874',
-          geo: {
-            lat: '-37.3159',
-            lng: '81.1496'
-          }
-        },
-        website: 'hildegard.org',
-        company: {
-          name: 'Romaguera-Crona',
-          catchPhrase: 'Multi-layered client-server neural-net',
-          bs: 'harness real-time e-markets'
-        }
-      },
-      {
-        id: 2,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Ervin Howell',
-        username: 'Antonette',
-        email: 'Shanna@melissa.tv',
-        address: {
-          street: 'Victor Plains',
-          suite: 'Suite 879',
-          city: 'Wisokyburgh',
-          zipcode: '90566-7771',
-          geo: {
-            lat: '-43.9509',
-            lng: '-34.4618'
-          }
-        },
-        phone: '010-692-6593 x09125',
-        website: 'anastasia.net',
-        company: {
-          name: 'Deckow-Crist',
-          catchPhrase: 'Proactive didactic contingency',
-          bs: 'synergize scalable supply-chains'
-        }
-      },
-      {
-        id: 3,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Clementine Bauch',
-        username: 'Samantha',
-        email: 'Nathan@yesenia.net',
-        address: {
-          street: 'Douglas Extension',
-          suite: 'Suite 847',
-          city: 'McKenziehaven',
-          zipcode: '59590-4157',
-          geo: {
-            lat: '-68.6102',
-            lng: '-47.0653'
-          }
-        },
-        phone: '1-463-123-4447',
-        website: 'ramiro.info',
-        company: {
-          name: 'Romaguera-Jacobson',
-          catchPhrase: 'Face to face bifurcated interface',
-          bs: 'e-enable strategic applications'
-        }
-      },
-      {
-        id: 4,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Patricia Lebsack',
-        username: 'Karianne',
-        email: 'Julianne.OConner@kory.org',
-        address: {
-          street: 'Hoeger Mall',
-          suite: 'Apt. 692',
-          city: 'South Elvis',
-          zipcode: '53919-4257',
-          geo: {
-            lat: '29.4572',
-            lng: '-164.2990'
-          }
-        },
-        phone: '493-170-9623 x156',
-        website: 'kale.biz',
-        company: {
-          name: 'Robel-Corkery',
-          catchPhrase: 'Multi-tiered zero tolerance productivity',
-          bs: 'transition cutting-edge web services'
-        }
-      },
-      {
-        id: 5,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Chelsey Dietrich',
-        username: 'Kamren',
-        email: 'Lucio_Hettinger@annie.ca',
-        address: {
-          street: 'Skiles Walks',
-          suite: 'Suite 351',
-          city: 'Roscoeview',
-          zipcode: '33263',
-          geo: {
-            lat: '-31.8129',
-            lng: '62.5342'
-          }
-        },
-        phone: '(254)954-1289',
-        website: 'demarco.info',
-        company: {
-          name: 'Keebler LLC',
-          catchPhrase: 'User-centric fault-tolerant solution',
-          bs: 'revolutionize end-to-end systems'
-        }
-      },
-      {
-        id: 6,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Mrs. Dennis Schulist',
-        username: 'Leopoldo_Corkery',
-        email: 'Karley_Dach@jasper.info',
-        address: {
-          street: 'Norberto Crossing',
-          suite: 'Apt. 950',
-          city: 'South Christy',
-          zipcode: '23505-1337',
-          geo: {
-            lat: '-71.4197',
-            lng: '71.7478'
-          }
-        },
-        phone: '1-477-935-8478 x6430',
-        website: 'ola.org',
-        company: {
-          name: 'Considine-Lockman',
-          catchPhrase: 'Synchronised bottom-line interface',
-          bs: 'e-enable innovative applications'
-        }
-      },
-      {
-        id: 7,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Kurtis Weissnat',
-        username: 'Elwyn.Skiles',
-        email: 'Telly.Hoeger@billy.biz',
-        address: {
-          street: 'Rex Trail',
-          suite: 'Suite 280',
-          city: 'Howemouth',
-          zipcode: '58804-1099',
-          geo: {
-            lat: '24.8918',
-            lng: '21.8984'
-          }
-        },
-        phone: '210.067.6132',
-        website: 'elvis.io',
-        company: {
-          name: 'Johns Group',
-          catchPhrase: 'Configurable multimedia task-force',
-          bs: 'generate enterprise e-tailers'
-        }
-      },
-      {
-        id: 9,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Nicholas Runolfsdottir V',
-        username: 'Maxime_Nienow',
-        email: 'Sherwood@rosamond.me',
-        address: {
-          street: 'Ellsworth Summit',
-          suite: 'Suite 729',
-          city: 'Aliyaview',
-          zipcode: '45169',
-          geo: {
-            lat: '-14.3990',
-            lng: '-120.7677'
-          }
-        },
-        phone: '586.493.6943 x140',
-        website: 'jacynthe.com',
-        company: {
-          name: 'Abernathy Group',
-          catchPhrase: 'Implemented secondary concept',
-          bs: 'e-enable extensible e-tailers'
-        }
-      },
-      {
-        id: 10,
-        avatar: 'some',
-        bio: 'Jhoot',
-        name: 'Glenna Reichert',
-        username: 'Delphine',
-        email: 'Chaim_McDermott@dana.io',
-        address: {
-          street: 'Dayna Park',
-          suite: 'Suite 449',
-          city: 'Bartholomebury',
-          zipcode: '76495-3109',
-          geo: {
-            lat: '24.6463',
-            lng: '-168.8889'
-          }
-        },
-        phone: '(775)976-6794 x41206',
-        website: 'conrad.com',
-        company: {
-          name: 'Yost and Sons',
-          catchPhrase: 'Switchable contextually-based project',
-          bs: 'aggregate real-time technologies'
-        }
-      }
-    ];
+    const mockResponse: User[] = getTestUsers();
     // Respond with the mock heroes
     let retResp: User[];
     const check = mockUserService.loadAll(data => {
@@ -335,16 +94,20 @@ describe('UserService (with mocks)', () => {
     httpTestingController.verify();
   });
 
-  it('should return expected users (called once)', () => {
+  it('should call loadAll()', () => {
+    const service = TestBed.get(UserService);
+    spyOn(service, 'loadAll').and.callFake(() => {
+      return of(getTestUsers());
+    });
+    expect(service.assign).toBeDefined();
+  });
 
-    // Arrange
-    let expectedUsers = getTestUsers();
-    let temp = userMockService.loadAll();
-    // Act
-    /*    userMockService.loadAll()(next => temp,
-          fail
-        );*/
-    expect(temp).toContain(expectedUsers);
+  it('should call showError()', () => {
+    expect(userMockService.showError()).toBeUndefined();
+  });
+
+  it('should call assign()', () => {
+    expect(userMockService.assign(getTestUsers())).toBeUndefined();
   });
 });
 

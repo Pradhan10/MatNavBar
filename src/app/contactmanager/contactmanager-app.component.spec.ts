@@ -1,7 +1,7 @@
-import {ContactmanagerAppComponent} from "./contactmanager-app.component";
-import {async} from "@angular/core/testing";
-import {MatIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {ContactmanagerAppComponent} from './contactmanager-app.component';
+import {async} from '@angular/core/testing';
+import {MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 describe('ContactManagerComponent', () => {
   let testContactManagerComponent: ContactmanagerAppComponent;
@@ -12,7 +12,7 @@ describe('ContactManagerComponent', () => {
     mockDomSanitizer = jasmine.createSpyObj('DomSanitizer', ['bypassSecurityTrustResourceUrl']);
     testContactManagerComponent = new ContactmanagerAppComponent(mockMatIconRegistry, mockDomSanitizer);
   }));
-  it('should create', function () {
+  it('should create', () => {
     expect(testContactManagerComponent).toBeTruthy();
   });
 

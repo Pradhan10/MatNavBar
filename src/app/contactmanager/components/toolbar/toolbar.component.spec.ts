@@ -5,6 +5,20 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from '../../../shared/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialog} from '@angular/material';
+import {of} from 'rxjs/internal/observable/of';
+
+
+/*<<-- Create a MatDialog mock class -->>*/
+export class MatDialogMock {
+  // When the component calls this.dialog.open(...) we'll return an object
+  // with an afterClosed method that allows to subscribe to the dialog result observable.
+  open() {
+    return {
+      afterClosed: () => of({action: true})
+    };
+  }
+}
+
 
 
 /*Tests for other than dialog reference*/
@@ -26,7 +40,8 @@ describe('ToolbarComponent [with mocks]', () => {
         RouterTestingModule.withRoutes([])
       ],
       // Provide the service-under-test
-      providers: [ToolbarComponent]
+      providers: [ToolbarComponent,
+        {provide: MatDialog, useClass: MatDialogMock} ]
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(ToolbarComponent);
       comp = fixture.componentInstance;
@@ -42,13 +57,10 @@ describe('ToolbarComponent [with mocks]', () => {
     expect(toolbarComponent).toBeDefined();
   });
 
-  it('should have ngOnInit() method', () => {
-    expect(toolbarComponent.ngOnInit()).toBeDefined();
-  });
   /* TEST IT FROM HERE : http://angular-tips.com/blog/2018/02/testing-angular-material-dialog-templates/*/
 
-  it('should call openAddContactDialog()', () => {
-/*    const mockDialog = new MatDialog();*/
-    const mockRouter = new RouterTestingModule();
+  it('should have openAddContactDialog() method', () => {
+    expect(toolbarComponent.openAddContactDialog()).toBeUndefined();
   });
+
 });

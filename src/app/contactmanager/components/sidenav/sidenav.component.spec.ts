@@ -55,6 +55,6 @@ describe('SideNav Component', () => {
   });
 
   it('should have ngOnInit() method',() => {
-    expect(sidenavComponent.ngOnInit()).toBeDefined();
+    expect(sidenavComponent.ngOnInit()).toBeUndefined();
   });
 });

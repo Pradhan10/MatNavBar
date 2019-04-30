@@ -1,11 +1,7 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
-import {MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material';
+import {Component} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {NewContactDialogComponent} from '../new-contact-dialog/new-contact-dialog.component';
 import {Router} from '@angular/router';
-import {MainContentComponent} from '../main-content/main-content.component';
-import {Address} from '../../models/address';
-import {Company} from '../../models/user';
-import {ToolBarHelper} from './toolbar-helper';
 
 
 @Component({
@@ -14,16 +10,24 @@ import {ToolBarHelper} from './toolbar-helper';
   styleUrls: ['./toolbar.component.scss'],
   entryComponents: [NewContactDialogComponent]
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 
-  toolBarHelper: ToolBarHelper;
   constructor(
     private dialog: MatDialog,
     private router: Router) {
   }
+  openAddContactDialog(): void {
+    const dialogRef = this.dialog.open(NewContactDialogComponent, {
+      width: '450px'
+    });
 
-  ngOnInit(): void {
-    this.toolBarHelper = new ToolBarHelper(this.dialog, this.router);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+
+      if (result) {
+        this.router.navigate(['/contactmanager', result.id]);
+      }
+    });
   }
 
 

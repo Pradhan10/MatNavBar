@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { User } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {User} from '../models/user';
+import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 
@@ -39,15 +39,35 @@ export class UserService {
   loadAll(): Subscription {
     return this.http.get<User[]>(this.usersUrl)
       .subscribe(data => {
-        this.dataStore.users = data;
-        this._users.next(Object.assign({}, this.dataStore).users);
-      }, error => {
-        console.log('Failed to fetch users');
-      });
+          /*          this.dataStore.users = data;
+                    this._users.next(Object.assign({}, this.dataStore).users);*/
+          this.assign(data);
+        },
+        error => this.showError()
+      );
   }
 
-  // loadAllAgain() {
-  //   return this.http.get<User[]>(this.usersUrl).pipe( this.dataStore.users);
-  // }
+  showError() {
+    console.log('Failed to fetch users');
+  }
+
+  assign(data) {
+    this.dataStore.users = data;
+    this._users.next(Object.assign({}, this.dataStore).users);
+  }
+
+  /*  loadAllAgain() {
+      return this.http.get<User[]>(this.usersUrl).pipe(
+        tap( // Log the result or error
+          data => {
+            this.dataStore.users = data;
+            this._users.next(Object.assign({}, this.dataStore).users);
+          },
+          error => {
+            console.log('Failed to fetch users');
+          }
+        )
+      );
+    }*/
 
 }
